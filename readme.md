@@ -1,6 +1,9 @@
 # Goal and Introduction
 
 The primary objective of this case study is to create a comprehensive report using fictitious data from a technology company called **Atlas Labs**. The HR team at Atlas Labs aims to monitor key employee metrics, and as a secondary goal, to understand the factors influencing employee attrition.
+# Case Study and Datasets
+
+This case study and its datasets are available on [DataCamp](https://app.datacamp.com/learn/courses/case-study-hr-analytics-in-power-bi). It provides an in-depth look into HR analytics using Power BI, helping you understand employee metrics and the factors affecting attrition.
 
 ---
 
@@ -113,4 +116,10 @@ The final page will focus on **attrition**, including:
 - **2022** had the highest attrition rate, with **22%** of employees leaving that year.
 
 ---
+# Power BI Report
+
+You can access the full Power BI report here:
+
+[Power BI Report - Atlas Labs HR Analytics](https://app.powerbi.com/view?r=eyJrIjoiOWEyOTRlMjgtYWU3ZC00YWQwLThmNDgtZjIzM2RiZjZkYjJjIiwidCI6ImQ3ZDQ2NTcxLWNhMTgtNGUyMy1iNzcwLWY3NTIxMTljMjgxNSIsImMiOjl9)
+
 
