@@ -1,112 +1,134 @@
-HR Dashboard - Power BI Case Study 📊
-Overview 🏢
+Project Overview:
 
-In this Power BI case study, you will be exploring a dataset for a fictitious software company called Atlas Labs. The primary goal of this case study is to analyze and visualize the organization's HR data, with a secondary focus on understanding factors affecting employee attrition. This analysis will help the company improve retention strategies and gain deeper insights into their workforce.
-Project Objectives 🎯
+The core goal of this case study is to build an interactive report using fictitious datasets from a tech company called Atlas Labs. The HR team at Atlas Labs wants to monitor key metrics related to employees and, as a secondary goal, understand the factors affecting employee attrition.
+Data Preparation:
 
-The core goal of this project is to:
+The project involves four primary tables:
 
-    Build a report to help Atlas Labs' HR team monitor key employee metrics.
-    Analyze employee attrition and identify the factors affecting it.
-    Create an interactive and insightful Power BI dashboard to communicate the findings.
+    DimEducationLevel: Contains data related to employees' education levels.
+    DimEmployee: Contains employee data, including personal details, hire dates, and attrition status.
+    DimRatingLevel: Contains rating levels for performance and satisfaction.
+    FactPerformanceRating: Contains performance ratings such as job satisfaction, environmental satisfaction, and manager ratings.
 
-Data Preparation 🧑‍💻
+To ensure proper analysis, we renamed these tables with the Dim prefix for dimension tables, and the FactPerformanceRating table was designated as the fact table. Additionally, we created a DimDate table to support time-based analysis. The following DAX code was used to create the DimDate table:
 
-The dataset consists of the following tables:
+DimDate = 
+VAR _minYear = YEAR(MIN(DimEmployee[HireDate]))
+VAR _maxYear = YEAR(MAX(DimEmployee[HireDate]))
+VAR _fiscalStart = 4 
 
-    DimEducationLevel: Education levels of employees.
-    DimEmployee: Employee details including hire date, age, gender, department, and job role.
-    DimPerformanceRating: Employee performance ratings.
-    DimSatisfactionLevel: Employee satisfaction levels (e.g., job, environment, work-life balance).
-    FactPerformanceRating: Performance-related data.
+RETURN
+ADDCOLUMNS(
+    CALENDAR(DATE(_minYear,1,1), DATE(_maxYear,12,31)),
+    "Year", YEAR([Date]),
+    "Year Start", DATE(YEAR([Date]), 1, 1),
+    "YearEnd", DATE(YEAR([Date]), 12, 31),
+    "MonthNumber", MONTH([Date]),
+    "MonthStart", DATE(YEAR([Date]), MONTH([Date]), 1),
+    "MonthEnd", EOMONTH([Date], 0),
+    "DaysInMonth", DATEDIFF(DATE(YEAR([Date]), MONTH([Date]), 1), EOMONTH([Date], 0), DAY) + 1,
+    "YearMonthNumber", INT(FORMAT([Date],"YYYYMM")),
+    "YearMonthName", FORMAT([Date],"YYYY-MMM"),
+    "DayNumber", DAY([Date]),
+    "DayName", FORMAT([Date],"DDDD"),
+    "DayNameShort", FORMAT([Date],"DDD"),
+    "DayOfWeek", WEEKDAY([Date]),
+    "MonthName", FORMAT([Date],"MMMM"),
+    "MonthNameShort", FORMAT([Date],"MMM"),
+    "Quarter", QUARTER([Date]),
+    "QuarterName", "Q"&FORMAT([Date],"Q"),
+    "YearQuarterNumber", INT(FORMAT([Date],"YYYYQ")),
+    "YearQuarterName", FORMAT([Date],"YYYY") & " Q" & FORMAT([Date],"Q"),
+    "QuarterStart", DATE(YEAR([Date]), (QUARTER([Date])*3)-2, 1),
+    "QuarterEnd", EOMONTH(DATE(YEAR([Date]), QUARTER([Date])*3, 1), 0),
+    "WeekNumber", WEEKNUM([Date]),
+    "WeekStart", [Date] - WEEKDAY([Date]) + 1,
+    "WeekEnd", [Date] + 7 - WEEKDAY([Date]),
+    "FiscalYear", IF(_fiscalStart = 1, YEAR([Date]), YEAR([Date]) + QUOTIENT(MONTH([Date]) + (13 - _fiscalStart), 13)),
+    "FiscalQuarter", QUARTER(DATE(YEAR([Date]), MOD(MONTH([Date]) + (13 - _fiscalStart) - 1, 12) + 1, 1)),
+    "FiscalMonth", MOD(MONTH([Date]) + (13 - _fiscalStart) - 1, 12) + 1
+)
 
-Steps Involved:
+Data Exploration:
 
-    Data Cleaning and Transformation using Power Query.
+We created the Overview page to showcase key metrics using various visuals, such as:
 
-    Date Table Creation:
-        A custom DimDate table was created to facilitate time-based analysis, providing fields like year, month, quarter, fiscal year, and week.
-        The following DAX formula was used to create the DimDate table:
+    Employee Count Card: Displays the total number of employees (active and inactive).
+    Active Employees by Department: Column chart showing the distribution of active employees across departments.
+    Attrition Rate: A bar chart visualizing attrition rates across departments and roles.
+    Employee Hiring Trend: Line chart showing employee trends over the years, with attrition status as a legend.
+    Active Employees by Department and Job Role: Tree map highlighting the largest department (Technology) and the predominant job role (Software Engineering).
 
-    DimDate = 
-    VAR _minYear = YEAR(MIN(DimEmployee[HireDate]))
-    VAR _maxYear = YEAR(MAX(DimEmployee[HireDate]))
-    VAR _fiscalStart = 4 
+We also created a Demographics page with the following visuals:
 
-    RETURN
-    ADDCOLUMNS(
-        CALENDAR(DATE(_minYear,1,1), DATE(_maxYear,12,31)),
-        "Year", YEAR([Date]),
-        "Year Start", DATE(YEAR([Date]),1,1),
-        "YearEnd", DATE(YEAR([Date]),12,31),
-        "MonthNumber", MONTH([Date]),
-        "MonthStart", DATE(YEAR([Date]), MONTH([Date]), 1),
-        "MonthEnd", EOMONTH([Date], 0),
-        ...
-    )
+    Active Employees by Age: Bar chart visualizing the age distribution of active employees.
+    Employees by Gender: Column chart depicting the gender distribution among employees.
+    Employees by Marital Status: Donut chart for marital status distribution.
+    Oldest and Youngest Employee: Cards showing the oldest (51) and youngest (18) employees.
 
-    Table Relationships were set up to link the relevant dimensions to the fact tables.
+DAX Measures and Their Explanations:
 
-Visualizations and Key Metrics 📊
-Overview Page 🌐
-
-    Employee Count: Total employees, Active vs Inactive employees.
-    Attrition Rate: Calculated as the percentage of employees who have left the company.
-    Performance Metrics: Job satisfaction, manager rating, work-life balance, and environment satisfaction.
-
-Attrition Insights 📉
-
-    Attrition Rate: The rate of employees leaving the organization is 16%.
-    Employee Trends: Visualizations on the number of employees hired by year and attrition trends.
-
-Demographics Insights 📅
-
-    Age Distribution: Most employees are between the ages of 20-29 years.
-    Gender and Diversity: Only 2.7% of active employees are women, and 8.5% identify as non-binary.
-    Ethnic Group Insights: White employees have the highest average salary, while those identifying as mixed or multiple ethnic groups have one of the lowest average salaries.
-
-DAX Measures and Calculations ➗
-
-    % Attrition Rate: Calculates the attrition percentage.
+    % Attrition Rate:
 
 % Attrition Rate = DIVIDE([Inactive Employees], [Active Employees] + [Inactive Employees], 0)
 
-Active Employees: Counts the number of currently active employees.
+Measures the percentage of employees who have left the company.
+
+Active Employees:
 
 Active Employees = COUNTROWS(FILTER(DimEmployee, DimEmployee[Attrition] = "No"))
 
-Job Satisfaction: Measures the highest job satisfaction level among employees.
+Counts the number of currently active employees.
 
-    Job Satisfaction = MAX(FactPerformanceRating[JobSatisfaction])
+Average Salary:
 
-    Age Insights: Measures the youngest and oldest employee ages.
+Average Salary = AVERAGE(DimEmployee[Salary])
 
-Key Insights 🧠
+Provides the average salary across all employees.
 
-    Atlas Labs has employed over 1470 people in total.
-    Currently, 1200 employees are active within the company.
-    The largest department by far is Technology.
-    The attrition rate for employees leaving the organization is 16%, which highlights the need to investigate factors impacting retention.
-    The majority of employees hired are between the ages of 20-29 years old, indicating a younger workforce.
-    Among active employees, women make up only 2.7% of the workforce.
-    Non-binary employees make up 8.5% of the workforce.
-    Employees who identify as white have the highest average salary.
-    Employees identifying as mixed or from multiple ethnic groups have one of the lowest average salaries.
+Environment Satisfaction:
+
+Environment Satisfaction = CALCULATE(MAX(FactPerformanceRating[EnvironmentSatisfaction]), USERELATIONSHIP(FactPerformanceRating[EnvironmentSatisfaction], DimSatisfiedLevel[SatisfactionLevel]))
+
+Measures the maximum environmental satisfaction level among employees.
+
+Inactive Employees:
+
+    Inactive Employees = COUNTROWS(FILTER(DimEmployee, DimEmployee[Attrition] = "Yes"))
+
+    Counts the number of employees who have left the organization.
+
+Additional measures include Job Satisfaction, Manager Rating, Relationship Satisfaction, Work-Life Balance, and others to assess various employee factors.
+Performance Tracker Page:
+
+We also created a Performance Tracker page with the following metrics:
+
+    Employee Start Date
+    Last Review Date
+    Next Review Date
+
+    NextReviewDate = 
+    VAR reviewOrHire = 
+      IF(MAX(FactPerformanceRating[ReviewDate]) = BLANK(), MAX(DimEmployee[HireDate]), MAX(FactPerformanceRating[ReviewDate]))
+    RETURN reviewOrHire + 365
+
+A line chart visualizes metrics like Job Satisfaction, Relationship Satisfaction, Self Rating, Environment Satisfaction, Work-Life Balance, and Manager Rating over time (by year). We also added tables for satisfaction levels and rating details for deeper insights.
+Attrition Analysis Page:
+
+Finally, we created an Attrition page that includes:
+
+    Attrition Rate Card: Displays overall attrition rate.
+    Attrition Rate by Department and Job Role: Column chart showing that Sales Representatives in the Sales department have the highest attrition rate at 39%.
+    Attrition by Hire Date: Line chart showing the trend of attrition, with the highest rate in 2022 (22%).
+
+Key Insights:
+
+    Atlas Labs has employed over 1,470 people in total.
+    The company currently has 1,200 active employees.
+    The largest department is Technology.
+    The Attrition Rate stands at 16%.
+    Most employees are between 20-29 years old.
+    Women represent only 2.7% of the workforce, while non-binary employees make up 8.5%.
+    White employees have the highest average salary, while those from mixed or multiple ethnic groups have one of the lowest average salaries.
     Sales department employees, particularly Sales Representatives, have the highest attrition rate at 39%.
-    2022 saw the most attrition with 22% of employees leaving that year.
-
-Final Thoughts and Next Steps 🔍
-
-This analysis provides a comprehensive view of the workforce dynamics at Atlas Labs, from attrition rates to salary trends. The insights gained through this dashboard can help HR teams take proactive steps in improving retention, enhancing diversity and inclusion efforts, and ensuring fair compensation practices.
-
-Future improvements could include:
-
-    Employee Retention Strategies: Further analysis to determine the root causes of high attrition.
-    Diversity Initiatives: Implement programs to increase female representation and promote equity across all ethnic groups.
-    Salary Adjustments: Investigate salary disparities between different ethnic groups and job roles.
-
-This Power BI dashboard serves as a dynamic tool for HR leaders to continuously monitor and optimize their workforce strategies.
-
-Feel free to reach out with any questions or further requests for details! 📧
-
-This updated README should provide a comprehensive understanding of your Power BI HR dashboard project, its objectives, and key insights.
+    2022 saw the highest attrition rate, with 22% of employees leaving that year.
