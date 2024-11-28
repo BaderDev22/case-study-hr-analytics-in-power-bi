@@ -12,27 +12,6 @@ The next step involves modeling the data and establishing relationships between 
 
 ---
 
-# Data Exploration and Dashboard Design
-
-After preparing the data, the next step is to explore it and design an overview page. The following key metrics and visualizations will be created:
-
-## Overview Visualizations
-
-1. **Employee Count Cards**: Displaying the total number of employees, active employees, and inactive employees.
-2. **Attrition Rate Bar Chart**: Showing the attrition rate over time.
-3. **Employee Distribution by Department**: A column chart displaying active employees by department.
-4. **Employee Hiring Trends**: A line chart showing employee hiring trends by year, with a filter for attrition status (Yes/No).
-5. **Active Employees by Department and Job Role**: A Tree Map to show the highest number of employees in the Technology department, particularly in Software Engineering roles.
-
-## Demographic Visualizations
-
-1. **Active Employees by Age**: A bar chart displaying active employees by age group, with a filter for attrition status.
-2. **Employee Distribution by Age and Gender**: A column chart illustrating employees by age and gender.
-3. **Employee Distribution by Marital Status**: A donut chart displaying employees by marital status.
-4. **Oldest and Youngest Employees**: Cards showing the oldest and youngest employees, with values being 51 and 18, respectively.
-
----
-
 # DAX Measures and Their Explanations
 
 The following DAX measures will be used to calculate key metrics:
@@ -79,6 +58,28 @@ The following DAX measures will be used to calculate key metrics:
 
 ---
 
+# Data Exploration and Dashboard Design
+
+After preparing the data, the next step is to explore it and design an overview page. The following key metrics and visualizations will be created:
+
+## Overview Visualizations
+
+1. **Employee Count Cards**: Displaying the total number of employees, active employees, and inactive employees.
+2. **Attrition Rate Bar Chart**: Showing the attrition rate over time.
+3. **Employee Distribution by Department**: A column chart displaying active employees by department.
+4. **Employee Hiring Trends**: A line chart showing employee hiring trends by year, with a filter for attrition status (Yes/No).
+5. **Active Employees by Department and Job Role**: A Tree Map to show the highest number of employees in the Technology department, particularly in Software Engineering roles.
+![alt text](assets/overview.png)
+
+## Demographic Visualizations
+
+1. **Active Employees by Age**: A bar chart displaying active employees by age group, with a filter for attrition status.
+2. **Employee Distribution by Age and Gender**: A column chart illustrating employees by age and gender.
+3. **Employee Distribution by Marital Status**: A donut chart displaying employees by marital status.
+4. **Oldest and Youngest Employees**: Cards showing the oldest and youngest employees, with values being 51 and 18, respectively.
+![alt text](assets/Demographics.png)
+---
+
 # Performance Tracker Page
 
 A dedicated page will track performance metrics, including:
@@ -86,7 +87,7 @@ A dedicated page will track performance metrics, including:
 1. **Employee Review Dates**: Displaying cards for the start date, last review date, and next review date.  
 2. **Line Chart for Satisfaction Metrics**: Job Satisfaction, Relationship Satisfaction, Self-Rating, Environmental Satisfaction, Work-Life Balance, and Manager Rating—tracked annually.  
 3. **Tables for Satisfaction and Rating Details**: Two tables will provide more detailed insights into satisfaction levels and ratings, including **Satisfaction Level ID** and **Rating Level ID**.
-
+![alt text](<assets/performance tracekr.png>)
 ---
 
 # Attrition Page
@@ -96,7 +97,7 @@ The final page will focus on **attrition**, including:
 1. **Attrition Rate Card**: Displaying the overall attrition rate.  
 2. **Column Chart for Attrition Rate by Department and Job Role**: The highest attrition rate is observed in the **Sales** department, with **Sales Representatives** having the highest attrition rate at 39%.  
 3. **Line Chart for Attrition by Hire Date**: The chart will show that the highest attrition occurred in **2022**, with **22%** of employees leaving that year.
-
+![alt text](assets/Attrition.png)
 ---
 
 # Key Insights 🧠
