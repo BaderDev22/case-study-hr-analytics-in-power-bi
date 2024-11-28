@@ -16,7 +16,7 @@ The next step involves modeling the data and establishing relationships between 
 
 After preparing the data, the next step is to explore it and design an overview page. The following key metrics and visualizations will be created:
 
-## Key Visualizations
+## Overview Visualizations
 
 1. **Employee Count Cards**: Displaying the total number of employees, active employees, and inactive employees.
 2. **Attrition Rate Bar Chart**: Showing the attrition rate over time.
